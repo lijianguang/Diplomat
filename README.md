@@ -8,17 +8,17 @@ In the current system that I am working for, it needs to receive many kinds of m
 
 Concept Explanation
 ============
-Handler: as its name means, the handler will handle the messages from other systems, then it will introduce a matched workshop and transfer the message to this workshop.
+Handler:  as its name means, the handler will handle the messages from other systems, then it will introduce a matched workshop and transfer the message to this workshop.
 
-Workshop: every kind of message has a corresponding workshop, this means one type of message needs one specific workshop to process, the workshop will convert the message which format is XML to a model, and then 	 the workshop will identify the market and dispatch the model to the worker under the market that has been identified.
+Workshop:  every kind of message has a corresponding workshop, this means one type of message needs one specific workshop to process, the workshop will convert the message which format is XML to a model, and then 	 the workshop will identify the market and dispatch the model to the worker under the market that has been identified.
 
-Market: similar with multi-tenancy, you can think a market is a tenant, one message will be processed using different logic in different markets.
+Market:  similar with multi-tenancy, you can think a market is a tenant, one message will be processed using different logic in different markets.
 
-Worker:
+Worker:  
 
-Process:
+Process:  
 
-Proxy:
+Proxy:  
 
 Diagram
 ============
