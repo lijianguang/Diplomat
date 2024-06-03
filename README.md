@@ -14,11 +14,11 @@ Workshop: every kind of message has a corresponding workshop, this means one typ
 
 Market: similar with multi-tenancy, you can think a market is a tenant, one message will be processed using different logic in different markets.
 
-Worker: every workshop will have a bunch of workers, in general, every market has one specific worker, but if multiple markets have the same processing for the message, we can only introduce one worker to serve these markets, and only need to set many WorkerMappingAttributes for this worker.
+Worker: every workshop will have a bunch of workers, in general, every market has one specific worker, but if multiple markets have the same processing for the message, we can only introduce one worker to serve these markets, and only need to set many WorkerMappingAttributes for this worker. the worker will configure the processes and execute these processes one by one.
 
-Process:  
+Process: one process should be one minimum processing unit that is split from the whole processing of one message, for example, creating one sales order, removing one inventory, validating the message model, etc.
 
-Proxy:  
+Proxy: all processes will through the proxy communicate with other systems, servers, domains, etc.
 
 Diagram
 ============
