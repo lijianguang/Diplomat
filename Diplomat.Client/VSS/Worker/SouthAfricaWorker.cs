@@ -18,8 +18,8 @@ namespace MultipleIntegration.VSS.Worker
             Console.WriteLine($"SouthAfricaWorker has executed; source: {Source.VSS}, market: {Market.SouthAfrica}; current market:{_market}");
             _processBuilder.UseProcess<ValidateVSSModelProcess, VSSModel, VSSModel>(m => m)
                 .UseProcess<CreateInventoryProcess, VSSModel, Inventory>(m => m.ToInventory())
-               .Build()
-               .Invoke(_processContextFactory.Create(model));
+                .Build()
+                .Invoke(_processContextFactory.Create(model));
         }
     }
 }

@@ -19,8 +19,8 @@ namespace MultipleIntegration.VSS.Worker
             _processBuilder.UseProcess<ValidateVSSModelProcess, VSSModel, VSSModel>(m => m)
                 .UseProcess<RemoveInventoryProcess, int>(() => 5)
                 .UseProcess<CreateInventoryProcess, VSSModel, Inventory>(m => m.ToInventory())
-               .Build()
-               .Invoke(_processContextFactory.Create(model));
+                .Build()
+                .Invoke(_processContextFactory.Create(model));
         }
     }
 }
