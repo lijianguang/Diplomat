@@ -4,7 +4,7 @@ using Diplomat.Core;
 
 namespace MultipleIntegration.DiplomatProcess
 {
-    public class RemoveInventoryProcess : Process<Inventory>
+    public class RemoveInventoryProcess : Process<int>
     {
         private readonly IInventoryProxy _inventoryProxy;
 
@@ -13,9 +13,9 @@ namespace MultipleIntegration.DiplomatProcess
             _inventoryProxy = inventoryProxy;
         }
 
-        protected override void Execute(Inventory inventory, Action next)
+        protected override void Execute(int id, Action next)
         {
-            _inventoryProxy.Remove(inventory.Id);
+            _inventoryProxy.Remove(id);
             next();
         }
     }

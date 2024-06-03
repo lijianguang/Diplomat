@@ -4,7 +4,7 @@ using MultipleIntegration.Proxy.Model;
 
 namespace MultipleIntegration.DiplomatProcess
 {
-    public class RemoveSalesOrderProcess : Process<SalesOrder>
+    public class RemoveSalesOrderProcess : Process<int>
     {
         private readonly ISalesOrderProxy _salesOrderProxy;
 
@@ -13,9 +13,9 @@ namespace MultipleIntegration.DiplomatProcess
             _salesOrderProxy = salesOrderProxy;
         }
 
-        protected override void Execute(SalesOrder salesOrder, Action next)
+        protected override void Execute(int id, Action next)
         {
-            _salesOrderProxy.Remove(salesOrder.Id);
+            _salesOrderProxy.Remove(id);
             next();
         }
     }

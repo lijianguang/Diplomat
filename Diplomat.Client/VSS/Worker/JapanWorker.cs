@@ -17,7 +17,7 @@ namespace MultipleIntegration.VSS.Worker
         {
             Console.WriteLine($"JapanWorker has executed; source: {Source.VSS}, market: {Market.Japan}; current market:{_market}");
             _processBuilder.UseProcess<ValidateVSSModelProcess, VSSModel, VSSModel>(m => m)
-                .UseProcess<RemoveInventoryProcess, VSSModel, Inventory>(m => new Inventory { Id = 5 })
+                .UseProcess<RemoveInventoryProcess, int>(() => 5)
                 .UseProcess<CreateInventoryProcess, VSSModel, Inventory>(m => m.ToInventory())
                .Build()
                .Invoke(_processContextFactory.Create(model));
