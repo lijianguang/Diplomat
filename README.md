@@ -20,5 +20,8 @@ In the current system that I am working for, it needs to receive many kinds of m
 **Proxy:** all processes will through the proxy communicate with other systems, servers, domains, etc.
 
 ## Diagram
+![image](https://github.com/lijianguang/Diplomat/assets/6203860/1fa7108b-df2c-4a45-b24c-e71f125fcefc)
+
+
 
 
