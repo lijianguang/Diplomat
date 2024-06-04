@@ -1,4 +1,4 @@
-Summary
+Diplomat
 ============
 This is a demonstration project, I want to prove my programming skills through this project.
 
