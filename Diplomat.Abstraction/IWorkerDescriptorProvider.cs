@@ -2,6 +2,6 @@
 {
     public interface IWorkerDescriptorProvider
     {
-        WorkerDescriptor Get(Source source, Market market);
+        WorkerDescriptor Get<T>(Market market);
     }
 }

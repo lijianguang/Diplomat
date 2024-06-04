@@ -2,6 +2,6 @@
 {
     public interface IWorkerDispatcher
     {
-        void Emit<T>(T model, Source source, Market market) where T : DiplomatModel;
+        void Emit<T>(T model, Market market) where T : DiplomatModel;
     }
 }

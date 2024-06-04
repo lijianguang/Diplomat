@@ -5,8 +5,8 @@ using MultipleIntegration.SICA.Model;
 
 namespace MultipleIntegration.SICA.Worker
 {
-    [WorkerMapping(Source.SICA, Market.Japan)]
-    [WorkerMapping(Source.SICA, Market.SouthAfrica)]
+    [WorkerMapping(Market.Japan)]
+    [WorkerMapping(Market.SouthAfrica)]
     public class JapanSouthAfricaWorker : SICAWorker
     {
         public JapanSouthAfricaWorker(IProcessBuilder processBuilder, IServiceProvider serviceProvider, IProcessContextFactory processContextFactory)

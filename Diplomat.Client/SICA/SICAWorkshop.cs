@@ -21,13 +21,5 @@ namespace MultipleIntegration.SICA
                 _ => throw new Exception($"Can't find the market {model.Market}"),
             };
         }
-
-        public override void Dispatch(SICAModel model, Market[] markets)
-        {
-            foreach (Market market in markets)
-            {
-                _workerDispatcher.Emit(model, Source.SICA, market);
-            }
-        }
     }
 }

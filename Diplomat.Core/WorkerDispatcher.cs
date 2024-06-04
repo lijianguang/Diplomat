@@ -11,9 +11,9 @@
             _serviceProvider = serviceProvider;
             _workerDescriptorProvider = workerDescriptorProvider;
         }
-        public void Emit<T>(T model, Source source, Market market) where T : DiplomatModel
+        public void Emit<T>(T model, Market market) where T : DiplomatModel
         {
-            var workerDescriptor = _workerDescriptorProvider.Get(source, market);
+            var workerDescriptor = _workerDescriptorProvider.Get<T>(market);
             if (_serviceProvider.GetService(workerDescriptor.Type) is IWorker worker)
             {
                 worker.Operate(model, market);

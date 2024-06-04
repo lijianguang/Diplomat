@@ -18,8 +18,8 @@ namespace Diplomat.Core
                         _workerDescriptors = _workerDescriptors ?? PickupDescriptors<IWorker>((t) =>
                         {
                             var attributes = t.GetCustomAttributes<WorkerMappingAttribute>();
-                            return attributes != null && attributes.Any() ? attributes.Select(a => (a.Source, a.Market)).ToList()
-                                : new List<(Source, Market)>();
+                            return attributes != null && attributes.Any() ? attributes.Select(a => a.Market).ToList()
+                                : new List<Market>();
                         });
                     }
                 }
@@ -27,23 +27,39 @@ namespace Diplomat.Core
             }
         }
 
-        private IReadOnlyList<WorkerDescriptor> PickupDescriptors<T>(Func<TypeInfo, IEnumerable<(Source, Market)>> getSourceAndMarkets)
+        private Type? DetectGenericTypeForWorker(Type type)
+        {
+            if(type.IsAbstract && type.IsGenericType && type.GenericTypeArguments.Length == 1)
+            {
+                return type.GetGenericArguments()[0];
+            }
+            return type.BaseType != null ? DetectGenericTypeForWorker(type.BaseType) : default;
+        }
+
+        private IReadOnlyList<WorkerDescriptor> PickupDescriptors<T>(Func<TypeInfo, IEnumerable<Market>> getMarkets)
         {
             var descriptors = new List<WorkerDescriptor>();
 
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
             var typesFromAssembly = assemblies.Where(x => x.DefinedTypes.Any(t => t.GetInterfaces().Any(i => i == typeof(T)))).SelectMany(x => x.DefinedTypes.Where(t => t.IsClass && t.GetInterfaces().Any(c => c == typeof(T))), (a, t) => t).ToList();
+            
             foreach (var t in typesFromAssembly)
             {
-                var sourceAndMarkets = getSourceAndMarkets(t);
-                foreach (var sourceAndMarket in sourceAndMarkets)
+                var operateModelType = DetectGenericTypeForWorker(t);
+                if(operateModelType == null)
                 {
-                    if (sourceAndMarket.Item1 != Source.Unknown && sourceAndMarket.Item2 != Market.Unknown)
+                    continue;
+                }
+                
+                var markets = getMarkets(t);
+                foreach (var market in markets)
+                {
+                    if (market != Market.Unknown)
                     {
                         descriptors.Add(new WorkerDescriptor()
                         {
-                            Source = sourceAndMarket.Item1,
-                            Market = sourceAndMarket.Item2,
+                            OperateModelType = operateModelType,
+                            Market = market,
                             Type = t,
                         });
                     }
@@ -52,10 +68,10 @@ namespace Diplomat.Core
             return descriptors;
         }
 
-        public WorkerDescriptor Get(Source source, Market market)
+        public WorkerDescriptor Get<T>(Market market)
         {
-            return WorkerDescriptors.FirstOrDefault(h => h.Source == source && h.Market == market)
-                ?? throw new NotImplementedException($"Can't find the WorkerDescriptor for source '{source}', market '{market}'");
+            return WorkerDescriptors.FirstOrDefault(h => h.OperateModelType == typeof(T) && h.Market == market)
+                ?? throw new NotImplementedException($"Can't find the WorkerDescriptor for type '{typeof(T).Name}', market '{market}'");
         }
     }
 }

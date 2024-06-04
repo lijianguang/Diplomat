@@ -9,7 +9,13 @@
             _workerDispatcher = workerDispatcher;
             _messageConverter = messageConverter;
         }
-        public abstract void Dispatch(T model, Market[] market);
+        public virtual void Dispatch(T model, Market[] markets)
+        {
+            foreach (Market market in markets)
+            {
+                _workerDispatcher.Emit(model, market);
+            }
+        }
         public abstract Market[] IdentityMarket(T model);
 
         public void Process(string message)

@@ -5,7 +5,7 @@ using MultipleIntegration.VSS.Model;
 
 namespace MultipleIntegration.VSS.Worker
 {
-    [WorkerMapping(Source.VSS, Market.SouthAfrica)]
+    [WorkerMapping(Market.SouthAfrica)]
     public class SouthAfricaWorker : VSSWorker
     {
         public SouthAfricaWorker(IProcessBuilder processBuilder, IServiceProvider serviceProvider, IProcessContextFactory processContextFactory)
