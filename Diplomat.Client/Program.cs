@@ -1,6 +1,7 @@
+using Diplomat.Client.Proxy.Inventory;
+using Diplomat.Client.Proxy.SalesOrder;
 using Diplomat.Core;
 using MultipleIntegration;
-using MultipleIntegration.Proxy;
 
 var builder = Host.CreateApplicationBuilder(args);
 builder.Services.AddHostedService<Worker>();

@@ -1,4 +1,5 @@
-﻿using MultipleIntegration.Proxy.Model;
+﻿using Diplomat.Client.Proxy.Inventory;
+using Diplomat.Client.Proxy.SalesOrder;
 
 namespace MultipleIntegration.VSS.Model
 {

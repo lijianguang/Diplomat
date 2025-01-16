@@ -2,6 +2,6 @@
 {
     public interface IProcessContextFactory
     {
-        ProcessContext Create<T>(T dataSource) where T : DiplomatModel;
+        ProcessContext Create<T>(T dataSource, Market market, Source source) where T : DiplomatModel;
     }
 }

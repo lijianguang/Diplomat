@@ -1,6 +1,4 @@
-﻿using MultipleIntegration.Proxy.Model;
-
-namespace MultipleIntegration.Proxy
+﻿namespace Diplomat.Client.Proxy.Inventory
 {
     public interface IInventoryProxy
     {

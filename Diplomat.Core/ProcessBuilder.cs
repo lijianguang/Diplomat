@@ -11,21 +11,21 @@ namespace Diplomat.Core
             _components.Add(process);
             return this;
         }
-        public IProcessBuilder UseProcess<T, IT, OT>(Func<IT, OT> modelBuilder)
+        public IProcessBuilder UseProcess<T, IT, OT>(Func<IT, OT> modelBuilder, bool blockForException = false)
         {
-            return UseProcess(typeof(T), modelBuilder);
+            return UseProcess(typeof(T), modelBuilder, blockForException);
         }
-        public IProcessBuilder UseProcess<T, OT>(Func<OT> modelBuilder)
+        public IProcessBuilder UseProcess<T, OT>(Func<OT> modelBuilder, bool blockForException = false)
         {
-            return UseProcess<object, OT>(typeof(T), (_) => modelBuilder());
-        }
-
-        public IProcessBuilder UseProcess<T>()
-        {
-            return UseProcess<object, object>(typeof(T));
+            return UseProcess<object, OT>(typeof(T), (_) => modelBuilder(), blockForException);
         }
 
-        private IProcessBuilder UseProcess<IT, OT>(Type processType, Func<IT, OT>? modelBuilder = null)
+        public IProcessBuilder UseProcess<T>(bool blockForException = false)
+        {
+            return UseProcess<object, object>(typeof(T), null, blockForException);
+        }
+
+        private IProcessBuilder UseProcess<IT, OT>(Type processType, Func<IT, OT>? modelBuilder = null, bool blockForException = false)
         {
             if (typeof(IProcess).IsAssignableFrom(processType))
             {
@@ -52,7 +52,7 @@ namespace Diplomat.Core
                             context.RegisterModelBuilder(processType, modelBuilder);
                         }
 
-                        process.Execute(context, next);
+                        process.Execute(context, next, blockForException);
                     };
                 });
             }

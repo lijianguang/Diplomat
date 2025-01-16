@@ -9,9 +9,9 @@
             _serviceProvider = serviceProvider;
         }
 
-        public ProcessContext Create<T>(T dataSource) where T : DiplomatModel
+        public ProcessContext Create<T>(T dataSource, Market market, Source source) where T : DiplomatModel
         {
-            return new ProcessContext(_serviceProvider, dataSource);
+            return new ProcessContext(_serviceProvider, dataSource, market, source);
         }
     }
 }

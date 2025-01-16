@@ -46,7 +46,13 @@ namespace Diplomat.Core
         public ModelDescriptor Get(Source source)
         {
             return MessageModelDescriptors.FirstOrDefault(h => h.Source == source)
-                ?? throw new NotImplementedException($"Can't find the ModelDescriptor for identifier '{source}'");
+                ?? throw new NotImplementedException($"Can't find the ModelDescriptor for source: '{source}'");
+        }
+
+        public ModelDescriptor Get(Type type)
+        {
+            return MessageModelDescriptors.FirstOrDefault(h => h.Type.Equals(type))
+                ?? throw new NotImplementedException($"Can't find the ModelDescriptor for type: '{type}'");
         }
     }
 }

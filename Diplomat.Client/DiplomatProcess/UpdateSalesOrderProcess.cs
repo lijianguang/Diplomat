@@ -1,6 +1,5 @@
-﻿using MultipleIntegration.Proxy.Model;
-using MultipleIntegration.Proxy;
-using Diplomat.Core;
+﻿using Diplomat.Core;
+using Diplomat.Client.Proxy.SalesOrder;
 
 namespace MultipleIntegration.DiplomatProcess
 {
@@ -13,10 +12,9 @@ namespace MultipleIntegration.DiplomatProcess
             _salesOrderProxy = salesOrderProxy;
         }
 
-        protected override void Execute(SalesOrder salesOrder, Action next)
+        protected override void Execute(SalesOrder salesOrder)
         {
             _salesOrderProxy.Update(salesOrder);
-            next();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Diplomat;
+using Diplomat.Client.Proxy.Inventory;
 using MultipleIntegration.DiplomatProcess;
-using MultipleIntegration.Proxy.Model;
 using MultipleIntegration.VSS.Model;
 
 namespace MultipleIntegration.VSS.Worker
@@ -19,7 +19,7 @@ namespace MultipleIntegration.VSS.Worker
             _processBuilder.UseProcess<ValidateVSSModelProcess, VSSModel, VSSModel>(m => m)
                 .UseProcess<CreateInventoryProcess, VSSModel, Inventory>(m => m.ToInventory())
                 .Build()
-                .Invoke(_processContextFactory.Create(model));
+                .Invoke(_processContextFactory.Create(model, _market, _source));
         }
     }
 }

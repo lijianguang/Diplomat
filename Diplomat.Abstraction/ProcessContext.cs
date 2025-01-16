@@ -4,15 +4,23 @@
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly dynamic _dataSource;
+        private readonly Market _market;
+        private readonly Source _source;
         private Dictionary<string, Delegate> modelBuilders = new Dictionary<string, Delegate>();
 
-        public ProcessContext(IServiceProvider serviceProvider, dynamic dataSource)
+        public ProcessContext(IServiceProvider serviceProvider, dynamic dataSource, Market market, Source source)
         {
             _serviceProvider = serviceProvider;
             _dataSource = dataSource;
+            _market = market;
+            _source = source;
         }
 
         public IServiceProvider ServiceProvider { get { return _serviceProvider; } }
+
+        public Market Market { get { return _market; } }
+
+        public Source Source { get { return _source; } }
 
         public ProcessContext RegisterModelBuilder<IT, OT>(Type type, Func<IT, OT> modelBuilder)
         {

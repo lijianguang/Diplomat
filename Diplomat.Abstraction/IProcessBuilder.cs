@@ -4,11 +4,11 @@
     {
         IProcessBuilder Use(Func<ProcessDelegate, ProcessDelegate> process);
 
-        IProcessBuilder UseProcess<T, IT, OT>(Func<IT, OT> modelBuilder);
+        IProcessBuilder UseProcess<T, IT, OT>(Func<IT, OT> modelBuilder, bool blockForException = false);
 
-        IProcessBuilder UseProcess<T, OT>(Func<OT> modelBuilder);
+        IProcessBuilder UseProcess<T, OT>(Func<OT> modelBuilder, bool blockForException = false);
         
-        IProcessBuilder UseProcess<T>();
+        IProcessBuilder UseProcess<T>(bool blockForException = false);
 
         ProcessDelegate Build();
     }

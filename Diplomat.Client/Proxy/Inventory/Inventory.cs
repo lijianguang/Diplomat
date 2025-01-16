@@ -1,4 +1,4 @@
-﻿namespace MultipleIntegration.Proxy.Model
+﻿namespace Diplomat.Client.Proxy.Inventory
 {
     public class Inventory
     {

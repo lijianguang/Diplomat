@@ -2,6 +2,6 @@
 {
     public interface IProcess
     {
-        void Execute(ProcessContext context, ProcessDelegate next);
+        void Execute(ProcessContext context, ProcessDelegate next, bool blockForException = false);
     }
 }

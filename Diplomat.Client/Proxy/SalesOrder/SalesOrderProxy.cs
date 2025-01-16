@@ -1,6 +1,4 @@
-﻿using MultipleIntegration.Proxy.Model;
-
-namespace MultipleIntegration.Proxy
+﻿namespace Diplomat.Client.Proxy.SalesOrder
 {
     public class SalesOrderProxy : ISalesOrderProxy
     {
