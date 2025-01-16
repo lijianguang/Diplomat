@@ -14,6 +14,7 @@ namespace MultipleIntegration.DiplomatProcess
 
         protected override void Execute(int id)
         {
+            throw new Exception("Exception occuer from RemoveInventoryProcess");
             _inventoryProxy.Remove(id);
         }
     }

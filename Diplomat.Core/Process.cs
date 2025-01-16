@@ -12,6 +12,7 @@ namespace Diplomat.Core
             if (context.ResolveModelBuilder<T>(this.GetType()) is Func<T> func)
             {
                 ProcessExecutedStatus status = ProcessExecutedStatus.Unknown;
+                string errorMessage = string.Empty;
                 try
                 {
                     Execute(func());
@@ -19,6 +20,7 @@ namespace Diplomat.Core
                 }
                 catch (Exception ex)
                 {
+                    errorMessage = ex.Message;
                     status = ProcessExecutedStatus.Failed;
                     if (blockForException)
                     {
@@ -28,7 +30,7 @@ namespace Diplomat.Core
                 finally
                 {
                     //log here whethe exception occur or not.
-                    Console.WriteLine($"market: {context.Market}, source: {context.Source}, process: {this.GetType().Name}, status: {status}");
+                    Console.WriteLine($"market: {context.Market}, source: {context.Source}, process: {this.GetType().Name}, status: {status}, error message: {errorMessage}");
                 }
 
                 next(context);

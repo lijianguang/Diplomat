@@ -50,11 +50,10 @@ namespace UnitTest.Diplomat
         }
 
         [Test]
-        public void TestMessageQueueHandler()
+        public void TestMessageQueueHandlerForVSS()
         {
             var handler = _serviceProvider.GetRequiredService<IHandler>();
 
-            //VSS
             Console.WriteLine("------------------------------- VSS -------------------------------");
             foreach (var message in _vssMessages)
             {
@@ -62,15 +61,20 @@ namespace UnitTest.Diplomat
                 handler.Handle(Source.VSS, message);
                 Console.WriteLine();
             }
+        }
 
-            //SICA
-            //Console.WriteLine("------------------------------- SICA -------------------------------");
-            //foreach (var message in _sicaMessages)
-            //{
-            //    Console.WriteLine(message);
-            //    handler.Handle(Source.SICA, message);
-            //    Console.WriteLine();
-            //}
+        [Test]
+        public void TestMessageQueueHandlerForSICA()
+        {
+            var handler = _serviceProvider.GetRequiredService<IHandler>();
+
+            Console.WriteLine("------------------------------- SICA -------------------------------");
+            foreach (var message in _sicaMessages)
+            {
+                Console.WriteLine(message);
+                handler.Handle(Source.SICA, message);
+                Console.WriteLine();
+            }
         }
     }
 }
