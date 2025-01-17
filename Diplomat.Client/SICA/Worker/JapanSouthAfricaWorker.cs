@@ -19,7 +19,8 @@ namespace MultipleIntegration.SICA.Worker
         {
             Console.WriteLine($"JapanSouthAfricaWorker has executed; source: {Source.SICA}, market: {Market.Japan} or {Market.SouthAfrica}; current market:{_market}");
 
-            _processBuilder.UseProcess<CreateInventoryProcess, SICAModel, Inventory>(m => m.ToInventory())
+            _processBuilder
+                .UseProcess<CreateInventoryProcess, SICAModel, Inventory>(m => m.ToInventory())
                 .UseProcess<CreateSalesOrderProcess, SICAModel, SalesOrder>(m => m.ToSalesOrder())
                 .Build()
                 .Invoke(_processContextFactory.Create(model, _market, _source));

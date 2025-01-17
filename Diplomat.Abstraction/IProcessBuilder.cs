@@ -10,6 +10,10 @@
         
         IProcessBuilder UseProcess<T>(bool blockForException = false);
 
+        IProcessBuilder OnProcessSuccessed(Action<ProcessContext> onSuccessed);
+
+        IProcessBuilder OnProcessFailed(Action<ProcessContext> onFailed);
+
         ProcessDelegate Build();
     }
 }

@@ -18,6 +18,10 @@
         }
 
         protected abstract void Operate(MT model);
+        protected abstract bool IsOpened(Market market, Source source);
+
+        protected abstract void Successed(ProcessContext context);
+        protected abstract void Failed(ProcessContext context);
 
         public virtual void Operate<T>(T model, Market market) where T : DiplomatModel
         {
@@ -42,13 +46,6 @@
             {
                 throw new ArgumentNullException($"The parameter model can't be converted to {typeof(MT).Name}.");
             }
-        }
-
-        private bool IsOpened(Market market, Source source)
-        {
-            //to do
-
-            return true;
         }
     }
 }

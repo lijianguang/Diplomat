@@ -6,6 +6,7 @@
         private readonly dynamic _dataSource;
         private readonly Market _market;
         private readonly Source _source;
+        private ProcessSnapshot? _snapshot;
         private Dictionary<string, Delegate> modelBuilders = new Dictionary<string, Delegate>();
 
         public ProcessContext(IServiceProvider serviceProvider, dynamic dataSource, Market market, Source source)
@@ -21,6 +22,17 @@
         public Market Market { get { return _market; } }
 
         public Source Source { get { return _source; } }
+
+        public ProcessSnapshot? Snapshot => _snapshot;
+
+        public void TakeSnapshot(IProcess process, object data, Exception? exception = null) 
+        {
+            _snapshot = new ProcessSnapshot(process, data, exception);
+        }
+        public void ClearSnapshot() 
+        {
+            _snapshot = null;
+        }
 
         public ProcessContext RegisterModelBuilder<IT, OT>(Type type, Func<IT, OT> modelBuilder)
         {

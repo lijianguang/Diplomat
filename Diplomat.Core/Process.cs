@@ -6,22 +6,21 @@ namespace Diplomat.Core
     {
         protected abstract void Execute(T model);
 
-        public void Execute(ProcessContext context, ProcessDelegate next, bool blockForException = false)
+        public void Execute(ProcessContext context, ProcessDelegate next, Action<ProcessContext> onSuccessed, Action<ProcessContext> onFailed, bool blockForException = false)
         {
-            var modelBuilder = context.ResolveModelBuilder<T>(this.GetType());
             if (context.ResolveModelBuilder<T>(this.GetType()) is Func<T> func)
             {
-                ProcessExecutedStatus status = ProcessExecutedStatus.Unknown;
-                string errorMessage = string.Empty;
+                T model = func();
                 try
                 {
-                    Execute(func());
-                    status = ProcessExecutedStatus.Suceeded;
+                    context.TakeSnapshot(this,model);
+                    Execute(model);
+                    onSuccessed(context);
                 }
                 catch (Exception ex)
                 {
-                    errorMessage = ex.Message;
-                    status = ProcessExecutedStatus.Failed;
+                    context.TakeSnapshot(this, model, ex);
+                    onFailed(context);
                     if (blockForException)
                     {
                         return;
@@ -29,8 +28,8 @@ namespace Diplomat.Core
                 }
                 finally
                 {
-                    //log here whethe exception occur or not.
-                    Console.WriteLine($"market: {context.Market}, source: {context.Source}, process: {this.GetType().Name}, status: {status}, error message: {errorMessage}");
+                    //whether exception occur or not.
+                    context.ClearSnapshot();
                 }
 
                 next(context);

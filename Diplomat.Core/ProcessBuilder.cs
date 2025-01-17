@@ -5,6 +5,8 @@ namespace Diplomat.Core
     public class ProcessBuilder : IProcessBuilder
     {
         private readonly List<Func<ProcessDelegate, ProcessDelegate>> _components = new();
+        private Action<ProcessContext> _onSuccessed = (_) => { };
+        private Action<ProcessContext> _onFailed = (_) => { };
 
         public IProcessBuilder Use(Func<ProcessDelegate, ProcessDelegate> process)
         {
@@ -23,6 +25,18 @@ namespace Diplomat.Core
         public IProcessBuilder UseProcess<T>(bool blockForException = false)
         {
             return UseProcess<object, object>(typeof(T), null, blockForException);
+        }
+
+        public IProcessBuilder OnProcessSuccessed(Action<ProcessContext> onSuccessed)
+        {
+            _onSuccessed = onSuccessed;
+            return this;
+        }
+
+        public IProcessBuilder OnProcessFailed(Action<ProcessContext> onFailed)
+        {
+            _onFailed = onFailed;
+            return this;
         }
 
         private IProcessBuilder UseProcess<IT, OT>(Type processType, Func<IT, OT>? modelBuilder = null, bool blockForException = false)
@@ -52,7 +66,7 @@ namespace Diplomat.Core
                             context.RegisterModelBuilder(processType, modelBuilder);
                         }
 
-                        process.Execute(context, next, blockForException);
+                        process.Execute(context, next, _onSuccessed, _onFailed, blockForException);
                     };
                 });
             }
@@ -72,6 +86,5 @@ namespace Diplomat.Core
 
             return app;
         }
-
     }
 }
